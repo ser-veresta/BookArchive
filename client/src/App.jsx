@@ -6,7 +6,7 @@ import { BookDetails } from "./components/BookDetails";
 import { useState } from "react";
 
 const client = new ApolloClient({
-  uri: "http://localhost:5000/graphql",
+  uri: "https://book-archive-99.herokuapp.com/graphql",
   cache: new InMemoryCache(),
   connectToDevTools: true,
 });
