@@ -35,7 +35,17 @@ export const AddBook = ({ id, setId }) => {
   return (
     <Box sx={{ mt: 2 }}>
       <Paper
-        sx={{ width: "80%", display: "flex", flexDirection: "column", gap: 2, p: 4, alignItems: "center" }}
+        sx={{
+          width: {
+            xs: "100%",
+            md: "80%",
+          },
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          p: 4,
+          alignItems: "center",
+        }}
         component="form"
         noValidate
         autoComplete="off"

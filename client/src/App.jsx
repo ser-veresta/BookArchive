@@ -31,10 +31,10 @@ export const App = () => {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <Grid sx={{ p: 5 }} spacing={4} container>
-          <Grid item md={8}>
+          <Grid item xs={12} md={8}>
             <BookList setId={setId} setOpen={setOpen} />
           </Grid>
-          <Grid item md={4}>
+          <Grid item xs={12} md={4}>
             <AddBook id={id} setId={setId} />
           </Grid>
         </Grid>
