@@ -1,5 +1,5 @@
 import { useAddBook, useGetAuthors, useEditBook, useGetBook } from "../queries";
-import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField } from "@mui/material";
+import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 
 export const AddBook = ({ id, setId }) => {
@@ -8,6 +8,7 @@ export const AddBook = ({ id, setId }) => {
   const [addBook] = useAddBook();
   const [editBook] = useEditBook();
   const [inputs, setInputs] = useState({ name: "", genre: "", img: "", authorId: "" });
+  const [err, setErr] = useState("");
 
   useEffect(() => {
     if (id) {
@@ -22,14 +23,39 @@ export const AddBook = ({ id, setId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    setErr(null);
+
+    if (!inputs.name) {
+      setErr("Enter a name");
+      return;
+    }
+
+    if (!inputs.genre) {
+      setErr("Enter a genre");
+      return;
+    }
+
+    if (!inputs.img) {
+      setErr("Enter a image url");
+      return;
+    }
+
+    if (!inputs.authorId || !id) {
+      setErr("Select an author");
+    }
+
     if (!id) {
       addBook({ variables: inputs });
+      setErr(null);
+      setInputs({ name: "", genre: "", img: "", authorId: "" });
+      setId(null);
     } else {
-      console.log(id);
       editBook({ variables: { ...inputs, id } });
+      setErr(null);
+      setInputs({ name: "", genre: "", img: "", authorId: "" });
+      setId(null);
     }
-    setInputs({ name: "", genre: "", img: "", authorId: "" });
-    setId(null);
   };
 
   return (
@@ -51,6 +77,11 @@ export const AddBook = ({ id, setId }) => {
         autoComplete="off"
         onSubmit={handleSubmit}
       >
+        {err && (
+          <Box sx={{ bgcolor: "pink", p: 2, borderRadius: 5, width: "100%" }}>
+            <Typography>{err}</Typography>
+          </Box>
+        )}
         <TextField fullWidth variant="filled" label="Name" name="name" value={inputs.name} onChange={handleChange} />
         <TextField fullWidth variant="filled" label="Genre" name="genre" value={inputs.genre} onChange={handleChange} />
         <TextField fullWidth variant="filled" label="ImageUrl" name="img" value={inputs.img} onChange={handleChange} />
